@@ -1,17 +1,13 @@
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URI);
 
-    try{
-
-        await mongoose.connect('mongodb://127.0.0.1:27017/dfitness');
-
-        console.log('MongoDB Connected');
-
-    }catch(error){
-
-        console.log(error);
+        console.log("MongoDB Connected");
+    } catch (err) {
+        console.log(err);
     }
-}
+};
 
 module.exports = connectDB;
