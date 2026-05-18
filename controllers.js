@@ -1,71 +1,63 @@
-const User = require('../models/User');
-exports.registerUser = async(req,res) => {
+const User = require('./user');
+const bcrypt = require('bcryptjs');
 
-    try{
+const registerUser = async (req, res) => {
 
-        const {email,password} = req.body;
+    try {
 
-        const existingUser = await User.findOne({email});
+        const { name, email, password } = req.body;
 
-        if(existingUser){
-
-            return res.status(400).json({
-                message:'User already exists'
-            });
-        }
-
-        const hashedPassword = await bcrypt.hash(password,10);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = new User({
+            name,
             email,
-            password:hashedPassword
+            password: hashedPassword
         });
 
         await user.save();
 
-        res.status(201).json({
-            message:'User Registered Successfully'
+        res.json({
+            message: 'User Registered'
         });
 
-    }catch(error){
-
-        res.status(500).json({message:error.message});
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
-}
+};
 
+const loginUser = async (req, res) => {
 
-// LOGIN
+    try {
 
-exports.loginUser = async(req,res) => {
+        const { email, password } = req.body;
 
-    try{
+        const user = await User.findOne({ email });
 
-        const {email,password} = req.body;
-
-        const user = await User.findOne({email});
-
-        if(!user){
-
+        if (!user) {
             return res.status(400).json({
-                message:'User not found'
+                message: 'User not found'
             });
         }
 
-        const isMatch = await bcrypt.compare(password,user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
 
-        if(!isMatch){
-
+        if (!isMatch) {
             return res.status(400).json({
-                message:'Invalid Password'
+                message: 'Wrong Password'
             });
         }
 
-        res.status(200).json({
-            message:'Login Successful'
+        res.json({
+            message: 'Login Successful'
         });
 
-    }catch(error){
-
-        res.status(500).json({message:error.message});
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
-}
+};
+
+module.exports = {
+    registerUser,
+    loginUser
+};

@@ -2,7 +2,7 @@
 
 const loginForm = document.getElementById('loginForm');
 
-loginForm.addEventListener('submit', function(e){
+loginForm.addEventListener('submit', async function(e){
 
     e.preventDefault();
 
@@ -15,17 +15,45 @@ loginForm.addEventListener('submit', function(e){
         return;
     }
 
-    // Save User
+    try {
 
-    localStorage.setItem("userEmail", email);
+        const response = await fetch(
+            'http://localhost:5000/api/login',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            }
+        );
 
-    // Success Message
+        const data = await response.json();
 
-    alert("Login Successful");
+        if(response.ok){
 
-    // Redirect
+            localStorage.setItem("userEmail", email);
 
-    window.location.href = "home.html";
+            alert(data.message);
+
+            window.location.href = "home.html";
+
+        } else {
+
+            alert(data.message);
+
+        }
+
+    } catch(error){
+
+        console.log(error);
+
+        alert("Server Error");
+
+    }
 
 });
 

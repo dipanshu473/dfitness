@@ -1,12 +1,20 @@
 const express = require('express');
-const router = express.Router();
+const cors = require('cors');
 
-const {
-    registerUser,
-    loginUser
-} = require('../controllers/authController');
+const connectDB = require('./db');
+const routes = require('./routes');
 
-router.post('/register', registerUser);
-router.post('/login', loginUser);
+const app = express();
 
-module.exports = router;
+connectDB();
+
+app.use(cors());
+app.use(express.json());
+
+app.use('/api', routes);
+
+const PORT = 5000;
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
