@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="BMI.css">
+</head>
+<body>
+     <header>
+
+    <div class="logo">
+        <!-- <img src="dfit.png" alt="D Fitness Logo"> -->
+        <h1>D Fitness</h1>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="fit.html">Workout</a></li>
+            <li><a href="dietplan.html">Diet Plan</a></li>
+            <li><a href="split.html">Workout Splits</a></li>
+            <li><a href="BMI.html">BMI</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </nav>
+
+</header>
+
+    <!-- BMI CALCULATOR SECTION -->
+
+<section class="bmi-section">
+
+    <h2 class="section-title">BMI Calculator</h2>
+
+    <div class="bmi-container">
+
+        <input type="number" id="height" placeholder="Enter Height (cm)">
+        
+        <input type="number" id="weight" placeholder="Enter Weight (kg)">
+
+        <button onclick="calculateBMI()">Calculate BMI</button>
+
+        <div class="result">
+            <h3 id="bmiResult">Your BMI: --</h3>
+            <p id="bmiStatus"></p>
+        </div>
+
+    </div>
+
+</section>
+    <script src="script.js"></script>
+    <script src="BMI.js"></script>
+</body>
+</html>
