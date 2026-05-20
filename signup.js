@@ -29,7 +29,7 @@ registerForm.addEventListener(
     try{
 
         const response = await fetch(
-            /api/signup,
+            '/api/signup',
             {
                 method:'POST',
 
